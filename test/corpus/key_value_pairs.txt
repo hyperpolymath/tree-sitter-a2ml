@@ -1,0 +1,99 @@
+================================================================================
+Simple key-value pair with quoted string
+================================================================================
+
+---
+version: "2026.2.4-cyberwar"
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (section_delimiter)
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (quoted_string
+        (double_string_content)))))
+
+================================================================================
+Key-value pair with number
+================================================================================
+
+---
+serial: 2026021601
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (section_delimiter)
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (number))))
+
+================================================================================
+Key-value pair with boolean
+================================================================================
+
+---
+proxied: true
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (section_delimiter)
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (boolean))))
+
+================================================================================
+Key-value pair with array
+================================================================================
+
+---
+algorithms: ["SHA3-512", "SHAKE256", "BLAKE3"]
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (section_delimiter)
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (array
+        (value
+          (quoted_string
+            (double_string_content)))
+        (value
+          (quoted_string
+            (double_string_content)))
+        (value
+          (quoted_string
+            (double_string_content)))))))
+
+================================================================================
+Key-value pair with block scalar indicator
+================================================================================
+
+---
+signature: |
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (section_delimiter)
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (block_scalar_indicator))))

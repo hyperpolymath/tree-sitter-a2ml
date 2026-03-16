@@ -1,0 +1,33 @@
+{
+  "grammars": [
+    {
+      "name": "a2ml",
+      "camelcase": "A2ML",
+      "scope": "source.a2ml",
+      "injection-regex": "^a2ml$",
+      "file-types": ["a2ml"],
+      "highlights": "queries/highlights.scm",
+      "locals": "queries/locals.scm",
+      "first-line-regex": "^# .*A2ML"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "PMPL-1.0-or-later",
+    "description": "Tree-sitter grammar for the A2ML format",
+    "authors": [
+      {
+        "name": "Jonathan D.A. Jewell",
+        "email": "j.d.a.jewell@open.ac.uk"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/hyperpolymath/tree-sitter-a2ml"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "node": true,
+    "rust": true
+  }
+}

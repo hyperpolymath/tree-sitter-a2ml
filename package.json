@@ -1,0 +1,68 @@
+{
+  "name": "tree-sitter-a2ml",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for the A2ML (Attestation & Automation Markup Language) format",
+  "license": "PMPL-1.0-or-later",
+  "author": "Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyperpolymath/tree-sitter-a2ml.git"
+  },
+  "homepage": "https://github.com/hyperpolymath/tree-sitter-a2ml",
+  "bugs": {
+    "url": "https://github.com/hyperpolymath/tree-sitter-a2ml/issues"
+  },
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "a2ml",
+    "syntax-highlighting",
+    "attestation",
+    "contractiles"
+  ],
+  "main": "bindings/node",
+  "types": "bindings/node/index.d.ts",
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**",
+    "*.wasm"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.3.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "prebuildify": "^6.0.1",
+    "tree-sitter-cli": "^0.25.10"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.22.4"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "build": "tree-sitter generate && node-gyp build",
+    "test": "tree-sitter test",
+    "parse": "tree-sitter parse",
+    "install": "node-gyp-build"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.a2ml",
+      "injection-regex": "^a2ml$",
+      "file-types": [
+        "a2ml"
+      ],
+      "highlights": "queries/highlights.scm",
+      "locals": "queries/locals.scm"
+    }
+  ]
+}

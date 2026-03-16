@@ -1,0 +1,16 @@
+================================================================================
+Attestation block with abstract
+================================================================================
+
+@abstract:
+Declarative state contract describing what must be true.
+@end
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (attestation_block
+    (attestation_start)
+    (attestation_content)
+    (attestation_end)))

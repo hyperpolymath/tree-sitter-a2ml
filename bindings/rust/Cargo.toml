@@ -1,0 +1,21 @@
+[package]
+name = "tree-sitter-a2ml"
+version = "0.1.0"
+description = "Tree-sitter grammar for the A2ML (Attestation & Automation Markup Language) format"
+license = "PMPL-1.0-or-later"
+authors = ["Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>"]
+repository = "https://github.com/hyperpolymath/tree-sitter-a2ml"
+edition = "2021"
+keywords = ["tree-sitter", "parser", "a2ml", "syntax-highlighting"]
+categories = ["parsing", "text-editors"]
+
+build = "build.rs"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+tree-sitter = ">=0.23"
+
+[build-dependencies]
+cc = "1.2"

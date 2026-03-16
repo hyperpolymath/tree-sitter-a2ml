@@ -1,0 +1,60 @@
+================================================================================
+Section with bracket heading and keys
+================================================================================
+
+---
+### [META]
+id: "did:web:example.com"
+version: "2026.2.4"
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (section_delimiter)
+  (section_heading)
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (quoted_string
+        (double_string_content))))
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (quoted_string
+        (double_string_content)))))
+
+================================================================================
+Multiple sections
+================================================================================
+
+---
+### [META]
+id: "test"
+
+---
+### [DNS]
+serial: 2026021601
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (section_delimiter)
+  (section_heading)
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (quoted_string
+        (double_string_content))))
+  (blank_line)
+  (section_delimiter)
+  (section_heading)
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (number))))

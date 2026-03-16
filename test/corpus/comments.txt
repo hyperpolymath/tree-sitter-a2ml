@@ -1,0 +1,42 @@
+================================================================================
+Comment header lines
+================================================================================
+
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# A2ML v2.1 (Cyberwar-Ready Trustfile)
+
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (comment)
+  (comment)
+  (blank_line)
+  (section_delimiter))
+
+================================================================================
+SPDX header with section and key
+================================================================================
+
+# SPDX-License-Identifier: PMPL-1.0-or-later
+
+---
+### [META]
+id: "did:web:example.com"
+
+--------------------------------------------------------------------------------
+
+(document
+  (blank_line)
+  (comment)
+  (blank_line)
+  (section_delimiter)
+  (section_heading)
+  (key_value_pair
+    (key
+      (plain_key))
+    (value
+      (quoted_string
+        (double_string_content)))))
