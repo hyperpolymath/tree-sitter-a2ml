@@ -1,23 +1,161 @@
 // SPDX-License-Identifier: PMPL-1.0-or-later
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 = tree-sitter-a2ml — Show Me The Receipts
 :toc:
+:toclevels: 3
 :icons: font
+:author: Jonathan D.A. Jewell
+:email: j.d.a.jewell@open.ac.uk
 
-The README makes claims. This file backs them up.
+The grammar makes claims about what A2ML looks like syntactically. This file
+backs them up with the specific node types, critical paths in the grammar, and
+enough context for an external reviewer to understand how the parser is
+generated, queried, and tested.
+
+== What A2ML Is
+
+A2ML (Attestation and Automation Markup Language) is the hyperpolymath
+machine-readable metadata format used in AI manifests, contractile trustfiles,
+STATE/META/ECOSYSTEM checkpoint files, and CI/CD attestation blocks.
+It is a YAML-like, line-oriented format with Markdown-style section headings
+using bracket notation (`### [META]`), `key: value` pairs, list items, and
+multi-line attestation blocks.
+Tree-sitter-a2ml provides a generated C parser for this format so that editors,
+linters, and AI tooling can perform syntax-aware operations on `.a2ml` files
+throughout the account.
+
+== Claim 1: Full grammar for the A2ML section model
+
+[quote, README]
+____
+tree-sitter-a2ml — Tree-sitter grammar for the A2ML (Attestation and
+Automation Markup Language) format. A2ML is a YAML-like configuration language
+used in contractile systems, trustfiles, and machine-readable metadata.
+____
+
+*How it works.*
+`grammar.js` is the single authoritative source of truth for the parser.
+The top-level rule is `document: repeat(_toplevel)` where `_toplevel` is a
+`choice` over eight node types: `section_delimiter` (`---\n`),
+`section_heading` (`### [BRACKET_FORM]`), `subsection_heading` (plain text
+heading), `key_value_pair`, `attestation_block`, `list_item`, `comment`, and
+`blank_line`.
+Precedence levels (`prec(10, ...)` on section delimiters, `prec(5, ...)` on
+section headings) resolve the ambiguity between headings with bracket syntax
+and plain headings without it.
+`tree-sitter generate` processes `grammar.js` to produce `src/parser.c` (the
+generated C parser), `src/grammar.json` (the serialised grammar), and
+`src/node-types.json` (the node type manifest for binding generators).
+The `bindings/` directory contains auto-generated bindings for Node.js
+(used by Deno-based tooling), Python (for analysis scripts), and Rust.
+
+*Honest caveat.*
+A2ML is an evolving format; the grammar covers the current stable node types
+but attestation block internals (multi-line values, indented continuations)
+may require grammar updates as the format matures.
+
+== Claim 2: Editor integration via query files
 
 [quote, README]
 ____
 A hyperpolymath project.
 ____
 
+*How it works.*
+`queries/highlights.scm` maps grammar nodes to standard tree-sitter capture
+names (`@comment`, `@markup.heading`, `@property`, `@string`, `@number`,
+`@constant.builtin`, `@punctuation.delimiter`) so any tree-sitter-aware editor
+(Neovim, Helix, Zed, Emacs with combobulate) can syntax-highlight `.a2ml`
+files without custom logic.
+`queries/locals.scm` defines scope and reference captures used by editors for
+jump-to-definition and rename operations within A2ML documents.
+`deno.json` wires the Deno-native binding so that A2ML-consuming Deno scripts
+(such as `0-AI-MANIFEST.a2ml` readers in contractile tooling) can call the
+parser directly: `import { parser } from "jsr:@hyperpolymath/tree-sitter-a2ml"`.
+
+*Honest caveat.*
+`locals.scm` is a stub — A2ML's flat key-value model does not have the nested
+scope structure that `locals.scm` is designed for; it is present for
+tool-compatibility but contains minimal rules.
+
+== Dogfooded Across The Account
+
+[cols="1,3", options="header"]
+|===
+| Tool / Repo | How tree-sitter-a2ml is used
+
+| `0-AI-MANIFEST.a2ml` (every RSR repo)
+| The canonical AI entry point is an `.a2ml` file; this grammar parses it for linting and agent tooling
+
+| `contractiles/`
+| Contractile trustfiles (`.a2ml`) are syntax-checked using this parser in CI
+
+| `hypatia`
+| Hypatia's A2ML rule module uses the tree-sitter binding to query manifest invariants
+
+| `a2ml-showcase`
+| Showcase repo that exercises the grammar against a corpus of real A2ML documents
+
+| `standards`
+| The A2ML language spec lives in `standards/`; this grammar is the reference implementation
+
+| `universal-language-server-plugin`
+| LSP plugin uses this grammar to provide hover, completion, and diagnostics for `.a2ml` files
+|===
+
 == File Map
 
-[cols="1,2"]
+[cols="2,4", options="header"]
 |===
 | Path | What's There
 
-| `src/` | Source code
-| `test(s)/` | Test suite
+| `grammar.js`
+| Authoritative grammar source: all rules, precedences, extras, and node definitions
+
+| `src/parser.c`
+| Generated C parser (do not edit manually — regenerate with `tree-sitter generate`)
+
+| `src/grammar.json`
+| Serialised grammar used by the tree-sitter CLI and binding generators
+
+| `src/node-types.json`
+| Node type manifest: named vs. anonymous nodes, field names — consumed by binding generators
+
+| `queries/highlights.scm`
+| Syntax highlighting captures mapped to standard tree-sitter capture names
+
+| `queries/locals.scm`
+| Scope and reference captures for editor jump-to-definition (minimal for A2ML's flat model)
+
+| `bindings/`
+| Auto-generated language bindings: Node.js (`bindings/node/`), Python (`bindings/python/`), Rust (`bindings/rust/`)
+
+| `binding.gyp`
+| Node.js native addon build descriptor for the C parser binding
+
+| `deno.json`
+| Deno module manifest: exports the parser for direct use in Deno scripts
+
+| `package.json`
+| npm-compatible package descriptor (used by the tree-sitter CLI toolchain, not for runtime deps)
+
+| `tree-sitter.json`
+| Tree-sitter CLI configuration: grammar name, highlights, queries directories
+
+| `test/`
+| Tree-sitter corpus tests: `.txt` files with `---` separators, input A2ML, and expected parse trees
+
+| `tests/`
+| Extended integration tests against real A2ML files from the account
+
+| `TEST-NEEDS.md`
+| Known testing gaps: attestation block edge cases, deeply nested continuations
+
+| `Justfile`
+| Developer recipes: `generate` (run tree-sitter generate), `test`, `build-bindings`
+
+| `flake.nix` / `guix.scm`
+| Reproducible build environments with `tree-sitter-cli` and C toolchain
 |===
 
 == Questions?
