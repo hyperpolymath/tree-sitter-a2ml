@@ -1,6 +1,6 @@
 # Test Coverage Status - tree-sitter-a2ml
 
-**CRG Grade: C** (Comprehensive testing achieved)
+## CRG Grade: C — ACHIEVED 2026-04-04
 
 ## Test Summary
 
