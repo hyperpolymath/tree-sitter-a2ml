@@ -1,0 +1,136 @@
+// SPDX-License-Identifier: PMPL-1.0-or-later
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+= tree-sitter-a2ml
+:toc: preamble
+:icons: font
+:author: Jonathan D.A. Jewell
+:email: j.d.a.jewell@open.ac.uk
+
+*Tree-sitter grammar for the A2ML (Attestation and Automation Markup Language) format.*
+
+image:https://img.shields.io/badge/License-PMPL--1.0--or--later-blue.svg[License: PMPL-1.0-or-later]
+image:https://img.shields.io/badge/tree--sitter-grammar-blue.svg[Tree-sitter]
+image:https://img.shields.io/badge/format-A2ML-green.svg[A2ML]
+
+== What this is
+
+`tree-sitter-a2ml` provides a generated C parser for A2ML — the hyperpolymath
+machine-readable metadata format used in AI manifests (`0-AI-MANIFEST.a2ml`),
+contractile trustfiles, STATE/META/ECOSYSTEM checkpoint files, and CI/CD
+attestation blocks.
+
+A tree-sitter parser enables syntax-aware operations in any tree-sitter-aware
+editor (Neovim, Helix, Zed, Emacs with combobulate) and in tooling that
+imports the generated bindings.
+
+== Quick start
+
+[source,bash]
+----
+# Regenerate the parser from grammar.js
+just generate
+
+# Run corpus tests
+just test
+
+# Build language bindings (Node.js, Python, Rust)
+just build-bindings
+----
+
+== Grammar overview
+
+A2ML is a line-oriented format. The grammar's top-level `document` rule
+recognises eight node types:
+
+* `section_delimiter` — `---` on its own line
+* `section_heading` — `### [BRACKET_FORM]` headings
+* `subsection_heading` — plain text headings
+* `key_value_pair` — `key: value` pairs
+* `attestation_block` — multi-line attestation content
+* `list_item` — `- item` or `* item` lines
+* `comment` — `#` comments
+* `blank_line`
+
+== Editor integration
+
+The `queries/` directory provides:
+
+[cols="2,3", options="header"]
+|===
+| File | Purpose
+
+| `queries/highlights.scm`
+| Maps grammar nodes to standard tree-sitter capture names
+  (`@comment`, `@markup.heading`, `@property`, `@string`, etc.)
+  for syntax highlighting in Neovim, Helix, Zed, and Emacs
+
+| `queries/locals.scm`
+| Scope and reference captures (minimal for A2ML's flat model)
+|===
+
+== Deno integration
+
+[source,javascript]
+----
+import { parser } from "jsr:@hyperpolymath/tree-sitter-a2ml";
+
+const tree = parser.parse(source);
+// tree.rootNode.children → array of A2ML top-level nodes
+----
+
+== File map
+
+[cols="2,3", options="header"]
+|===
+| Path | What it contains
+
+| `grammar.js`
+| Authoritative grammar source — all rules, precedences, node types
+
+| `src/parser.c`
+| Generated C parser (do not edit — regenerate with `just generate`)
+
+| `src/grammar.json`
+| Serialised grammar for tree-sitter CLI and binding generators
+
+| `src/node-types.json`
+| Node type manifest consumed by binding generators
+
+| `queries/highlights.scm`
+| Syntax highlighting captures
+
+| `queries/locals.scm`
+| Scope and reference captures
+
+| `bindings/`
+| Auto-generated: Node.js, Python, Rust
+
+| `binding.gyp`
+| Node.js native addon build descriptor
+
+| `deno.json`
+| Deno module manifest with JSR export
+
+| `test/`
+| Tree-sitter corpus tests (`.txt` input/expected pairs)
+
+| `tests/`
+| Extended integration tests against real A2ML files
+|===
+
+== A2ML across the account
+
+Every hyperpolymath repo carries an `0-AI-MANIFEST.a2ml` file.
+`tree-sitter-a2ml` is the grammar that makes all of them syntax-aware in your
+editor and in CI tooling.
+
+See link:EXPLAINME.adoc[EXPLAINME.adoc] for implementation evidence and caveats.
+
+== License
+
+PMPL-1.0-or-later. See `LICENSE`.
+
+== Author
+
+Jonathan D.A. Jewell +
+j.d.a.jewell@open.ac.uk
