@@ -2,7 +2,7 @@
   "name": "tree-sitter-a2ml",
   "version": "0.1.0",
   "description": "Tree-sitter grammar for the A2ML (Attestation & Automation Markup Language) format",
-  "license": "PMPL-1.0-or-later",
+  "license": "MPL-2.0",
   "author": "Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>",
   "repository": {
     "type": "git",

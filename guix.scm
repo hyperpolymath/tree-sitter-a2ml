@@ -1,4 +1,4 @@
-; SPDX-License-Identifier: PMPL-1.0-or-later
+; SPDX-License-Identifier: MPL-2.0
 ;; guix.scm — GNU Guix package definition for tree-sitter-a2ml
 ;; Usage: guix shell -f guix.scm
 
@@ -14,5 +14,5 @@
   (synopsis "tree-sitter-a2ml")
   (description "tree-sitter-a2ml — part of the hyperpolymath ecosystem.")
   (home-page "https://github.com/hyperpolymath/tree-sitter-a2ml")
-  (license ((@@ (guix licenses) license) "PMPL-1.0-or-later"
+  (license ((@@ (guix licenses) license) "MPL-2.0"
              "https://github.com/hyperpolymath/palimpsest-license")))

@@ -2,7 +2,7 @@
 Comment header lines
 ================================================================================
 
-# SPDX-License-Identifier: PMPL-1.0-or-later
+# SPDX-License-Identifier: MPL-2.0
 # A2ML v2.1 (Cyberwar-Ready Trustfile)
 
 ---
@@ -20,7 +20,7 @@ Comment header lines
 SPDX header with section and key
 ================================================================================
 
-# SPDX-License-Identifier: PMPL-1.0-or-later
+# SPDX-License-Identifier: MPL-2.0
 
 ---
 ### [META]
