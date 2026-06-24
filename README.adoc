@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: CC-BY-SA-4.0
 // SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 = tree-sitter-a2ml
 :toc: preamble
@@ -8,7 +8,7 @@
 
 *Tree-sitter grammar for the A2ML (Attestation and Automation Markup Language) format.*
 
-image:https://img.shields.io/badge/License-PMPL--1.0--or--later-blue.svg[License: MPL-2.0]
+image:https://img.shields.io/badge/License-MPL--2.0-blue.svg[License: MPL-2.0]
 image:https://img.shields.io/badge/tree--sitter-grammar-blue.svg[Tree-sitter]
 image:https://img.shields.io/badge/format-A2ML-green.svg[A2ML]
 
